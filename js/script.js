@@ -261,7 +261,7 @@ var levels = [
         "title": "brain"
     },
 ]
-let level = 4;
+let level = 0;
 
 levelSelect.setAttribute("max", levels.length)
 
