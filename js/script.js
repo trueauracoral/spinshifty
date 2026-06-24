@@ -171,7 +171,7 @@ var levels = [
     },
 
 ]
-let level = 2;
+let level = 0;
 
 levelSelect.setAttribute("max", levels.length)
 
