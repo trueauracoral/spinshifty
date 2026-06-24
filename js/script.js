@@ -410,7 +410,7 @@ function gameUpdate() {
     player.y += player.speed * lastPush.y * dt
     // Collide
     let collided = false;
-    if (level == 5) {
+    if (level == 3) {
         for (let i = 0; i < currentLevel.level.length; i++) {
             if (polyCircle(currentLevel.level[i],player.x,player.y,player.radius -2)) {
                 collided = true;
