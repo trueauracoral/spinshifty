@@ -121,6 +121,71 @@ var levels = [
     },
     {
         "level": [
+            [
+                vec2(4.4, 137.6),
+                vec2(4.6, 102.2),
+                vec2(5.7, 51.7),
+                vec2(18.3, 18.0),
+                vec2(50.7, 6.0),
+                vec2(78.7, 6.0),
+                vec2(104.5, 10.4),
+                vec2(132.7, 32.5),
+                vec2(146.1, 73.8),
+                vec2(135.8, 120.0),
+                vec2(120.3, 137.0),
+                vec2(93.2, 142.2),
+                vec2(46.5, 136.0),
+                vec2(28.5, 121.0),
+                vec2(27.0, 67.8),
+                vec2(50.5, 45.5),
+                vec2(46.9, 30.6),
+                vec2(35.5, 37.7),
+                vec2(24.8, 53.0),
+                vec2(22.5, 93.4),
+                vec2(23.5, 137.0)
+            ],
+            [
+                vec2(65, 42.9),
+                vec2(60, 26.5),
+                vec2(71.5, 24.8),
+                vec2(81.0, 27.5),
+                vec2(97.8, 35.3),
+                vec2(118.9, 58.0),
+                vec2(120.9, 99.0),
+                vec2(108.0, 114.4),
+                vec2(89.3, 117.2),
+                vec2(68.6, 113.0),
+                vec2(42.2, 113.0),
+                vec2(40.5, 80.8),
+                vec2(53.0, 64.8),
+                vec2(55.0, 79.4),
+                vec2(48.0, 85.0),
+                vec2(51.8, 99.5),
+                vec2(59.3, 100.3),
+                vec2(82.7, 101.0),
+                vec2(107.8, 94.6),
+                vec2(105.4, 64.5),
+                vec2(91.0, 48.0),
+                vec2(75.7, 44.5),
+                vec2(66, 42.9)
+            ],
+            [
+                vec2(63.7, 62.0),
+                vec2(65.6, 77.7),
+                vec2(71.9, 76.5),
+                vec2(82.2, 77.0),
+                vec2(91.5, 75.7),
+                vec2(85.5, 60.2),
+                vec2(63.5, 62.3)
+            ],
+        ],
+        "start": vec2(12,129),
+        "angle": 3*Math.PI/2,
+        "finish": [vec2(52,82), vec2(54, 100)],
+        "title": "speed"
+    },
+    {
+        "level": [
             vec2(70,100),
             vec2(70,133),
             vec2(47,131),
@@ -260,6 +325,7 @@ var levels = [
         "finish": [vec2(81,27.5), vec2(66, 14)],
         "title": "brain"
     },
+
 ]
 let level = 0;
 
@@ -343,7 +409,18 @@ function gameUpdate() {
     player.x += player.speed * lastPush.x * dt
     player.y += player.speed * lastPush.y * dt
     // Collide
-    let collided = polyCircle(levels[level].level,player.x,player.y,player.radius -2)
+    let collided = false;
+    if (level == 5) {
+        for (let i = 0; i < currentLevel.level.length; i++) {
+            if (polyCircle(currentLevel.level[i],player.x,player.y,player.radius -2)) {
+                collided = true;
+                break;
+            }
+        }
+    } else {
+
+        collided = polyCircle(currentLevel.level,player.x,player.y,player.radius -2)
+    }
     //drawPixelText(collided, 0, 0)
     if (collided) {
         let currentLevel = levels[level]
@@ -384,15 +461,32 @@ function gameDraw() {
     ctx.shadowOffsetX = -5;
     ctx.fillStyle = '#f89f44';
     
-    ctx.beginPath();
     let points = currentLevel.level
-    ctx.moveTo(points[0].x, points[0].y);
-    for (var i = 1; i < points.length; i++) {
-        ctx.lineTo(points[i].x,points[i].y)
+    if (level == 3) {
+        for (let j = 0; j < points.length; j++) {
+            ctx.save()
+            ctx.beginPath();
+            ctx.moveTo(points[j][0].x, points[j][0].y);
+            for (var i = 1; i < points[j].length; i++) {
+                ctx.lineTo(points[j][i].x,points[j][i].y)
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke()
+            ctx.restore()
+        }
+
+    } else {
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (var i = 1; i < points.length; i++) {
+            ctx.lineTo(points[i].x,points[i].y)
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke()
+        ctx.restore()
     }
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke()
     ctx.restore()
 
     // player
