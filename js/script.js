@@ -1,4 +1,4 @@
-import { polyCircle, lineCircle, linePoint, pointCircle, drawPixelText, vec2 } from "./globals.js";
+import { loadImage, polyCircle, lineCircle, linePoint, pointCircle, drawPixelText, vec2 } from "./globals.js";
 
 const canvas = document.getElementById('canvas');
 
@@ -14,6 +14,12 @@ const halfWidth = width / 2;
 const halfHeight = height / 2;
 
 ctx.imageSmoothingEnabled= false
+
+let tutorial = loadImage("./images/tutorial2.png")
+
+let levelSelect = document.getElementById("number");
+levelSelect.defaultValue = "1";
+levelSelect.dispatchEvent(new Event('input'));
 
 class Ball {
     constructor() {
@@ -54,7 +60,8 @@ var levels = [
         ],
         "start": vec2(124,126),
         "angle": 3*Math.PI/2,
-        "finish": [vec2(34,62), vec2(34, 43)]
+        "finish": [vec2(34,61.6), vec2(34, 43)],
+        "title": "zigzag"
     },
     {
         "level": [
@@ -83,10 +90,71 @@ var levels = [
         ],
         "start": vec2(124,126),
         "angle": 3*Math.PI/2,
-        "finish": [vec2(11,109), vec2(11, 133)]
+        "finish": [vec2(11,109), vec2(11, 133)],
+        "title": "narrow pipes"
+    },
+    {
+        "level": [
+            vec2(70,100),
+            vec2(70,133),
+            vec2(47,131),
+            vec2(27,117),
+            vec2(42,102),
+            vec2(24,113),
+            vec2(15,82),
+            vec2(15,52),
+            vec2(25,32),
+            vec2(42,20),
+            vec2(54,38), // spike
+            vec2(49,18),
+            vec2(67,14),
+            vec2(89,15),
+            vec2(112,20),
+            vec2(126,30),
+            vec2(116,44),
+            vec2(129,36),
+            vec2(134,53),
+            vec2(137,72),
+            vec2(134,92),
+            vec2(123,114),
+            vec2(107,104),
+            vec2(120,116),
+            vec2(106,128),
+            vec2(83,132), //end
+            vec2(83,102),
+            vec2(93,95),
+            vec2(102,82),
+            vec2(119,84), // spike
+            vec2(106,78),
+            vec2(101,61),
+            vec2(91,53),
+            vec2(87,30), // spike
+            vec2(83,52),
+            vec2(66,53),
+            vec2(54,58),
+            vec2(51,69),
+            vec2(33,77), // spike
+            vec2(52,74),
+            vec2(55,87),
+            
+        ],
+        "start": vec2(57,114),
+        "angle": Math.PI,
+        "finish": [vec2(86,100), vec2(86, 131.5)],
+        "title": "donut"
     },
 ]
 let level = 0;
+
+levelSelect.setAttribute("max", levels.length)
+
+// Source - https://stackoverflow.com/a/77478172
+// Posted by Nom
+// Retrieved 2026-06-23, License - CC BY-SA 4.0
+levelSelect.addEventListener('input', function() {
+    level = this.value - 1
+  });
+
 function restart() {
     player.x = levels[level].start.x
     player.y = levels[level].start.y
@@ -98,7 +166,7 @@ let dt;
 
   const keys = {
     //ArrowUp: false,
-    ArrowDown: false,
+    //ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false,
     Space:false,
@@ -158,7 +226,7 @@ function gameUpdate() {
     player.y += player.speed * lastPush.y * dt
     // Collide
     let collided = polyCircle(levels[level].level,player.x,player.y,player.radius -2)
-    drawPixelText(collided, 0, 0)
+    //drawPixelText(collided, 0, 0)
     if (collided) {
         let currentLevel = levels[level]
         let startPos = currentLevel.start;
@@ -172,9 +240,11 @@ function gameUpdate() {
     let finished = lineCircle(finishedLine[0].x,finishedLine[0].y,
                               finishedLine[1].x,finishedLine[1].y,
                               player.x, player.y, player.radius)
-    drawPixelText(finished, 0, 10)
+    //drawPixelText(finished, 0, 10)
     if (finished) {
-        level+=1
+        if (level + 1 < levels.length) {
+            level+=1
+        }
         restart()
     }
 
@@ -236,6 +306,14 @@ function gameDraw() {
     ctx.lineTo(secondFinish.x,secondFinish.y)
     ctx.closePath()
     ctx.stroke()
+
+    // Level name
+    drawPixelText(`level ${level+1}/${levels.length}: ${currentLevel.title}`, 2,2,false,"white")
+    // Tutorial
+    ctx.save()
+    ctx.filter = "blur(3px)";
+    ctx.drawImage(tutorial,height-15,0)
+    ctx.restore()
 }
 let lastTime = performance.now();
 function gameLoop() {
