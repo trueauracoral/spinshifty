@@ -148,19 +148,20 @@ let level = 0;
 
 levelSelect.setAttribute("max", levels.length)
 
-// Source - https://stackoverflow.com/a/77478172
-// Posted by Nom
-// Retrieved 2026-06-23, License - CC BY-SA 4.0
-levelSelect.addEventListener('input', function() {
-    level = this.value - 1
-  });
-
 function restart() {
     player.x = levels[level].start.x
     player.y = levels[level].start.y
     player.angle = levels[level].angle
     lastPush = vec2(0,0)
 }
+// Source - https://stackoverflow.com/a/77478172
+// Posted by Nom
+// Retrieved 2026-06-23, License - CC BY-SA 4.0
+levelSelect.addEventListener('input', function() {
+    level = this.value - 1
+    restart()
+  });
+
 restart()
 let dt;
 
