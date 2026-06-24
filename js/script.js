@@ -272,6 +272,7 @@ function gameUpdate() {
     if (finished) {
         if (level + 1 < levels.length) {
             level+=1
+            levelSelect.value = level + 1
         }
         restart()
     }

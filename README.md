@@ -3,6 +3,8 @@
 # TODO List
 - [ ] We need a infogrpahic to show how to play the game
 # Devlog
+## 6/24/26
+- Added the fourth level
 ## 6/23/26
 - Level selector 
 - Level title
