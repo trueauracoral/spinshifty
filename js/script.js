@@ -169,9 +169,99 @@ var levels = [
         "finish": [vec2(86,100), vec2(86, 131.5)],
         "title": "donut"
     },
-
+    {
+        "level": [
+            vec2(80.6, 124.8),
+            vec2(97.2, 142.2),
+            vec2(107.8, 141.6),
+            vec2(117.3, 131.4),
+            vec2(123.5, 114.0),
+            vec2(127.7, 128.8),
+            vec2(133.8, 136.8),
+            vec2(138.8, 141.0),
+            vec2(149.4, 140.0),
+            vec2(154.5, 136.4),
+            vec2(158.4, 122.0),
+            vec2(157.7, 101.2),
+            vec2(152.3, 78.8),
+            vec2(138.0, 66.2),
+            vec2(120.8, 67.6),
+            vec2(119.4, 56.7),
+            vec2(115.7, 46.9),
+            vec2(104.0, 44.3),
+            vec2(80.4, 59.5),
+            vec2(77.0, 56.6),
+            vec2(104.7, 40.4),
+            vec2(113.0, 40.2),
+            vec2(127.5, 53.4),
+            vec2(132.0, 59.5),
+            vec2(139.9, 62.0),
+            vec2(146.0, 65.1),
+            vec2(150.8, 66.8),
+            vec2(155.5, 64.0),
+            vec2(158.0, 53.6),
+            vec2(157.6, 36.0),
+            vec2(152.0, 18.3),
+            vec2(144.5, 8.0),
+            vec2(128.4, 2.3),
+            vec2(109.8, 0.7),
+            vec2(88.4, 2.3),
+            vec2(62.5, 15.5),
+            vec2(77.5, 29.4),
+            vec2(98.0, 19.6),
+            vec2(117.7, 18.9),
+            vec2(132.2, 26.4),
+            vec2(138.5, 39.7),
+            vec2(124.6, 23.5),
+            vec2(108.9, 20.5),
+            vec2(88.7, 28.4),
+            vec2(79.7, 35.0),
+            vec2(62.0, 46.5),
+            vec2(56.3, 59.9),
+            vec2(58.7, 71.8),
+            vec2(70.7, 81.0),
+            vec2(81.3, 78.2),
+            vec2(93.0, 70.8),
+            vec2(105.0, 64.9),
+            vec2(91.6, 75.2),
+            vec2(83.0, 88.7),
+            vec2(95.7, 100.7),
+            vec2(106.8, 89.7),
+            vec2(115.2, 85.8),
+            vec2(121.0, 82.6),
+            vec2(126.7, 85.0),
+            vec2(138.7, 97.5),
+            vec2(140.5, 113.0),
+            vec2(134.5, 98.6),
+            vec2(123.1, 90.2),
+            vec2(107.6, 97.2),
+            vec2(101.6, 109.9),
+            vec2(101.0, 118.3),
+            vec2(92.4, 105.6),
+            vec2(72.0, 87.8),
+            vec2(48.5, 73.8),
+            vec2(29.9, 68.0),
+            vec2(16.3, 80.2),
+            vec2(10.0, 102.7),
+            vec2(20.0, 117.5),
+            vec2(34.2, 131.0),
+            vec2(55.0, 138.5),
+            vec2(67.0, 122.2),
+            vec2(48.7, 112.4),
+            vec2(37.0, 101.5),
+            vec2(34.2, 92.0),
+            vec2(44.0, 94.0),
+            vec2(55.2, 104.6),
+            vec2(72.0, 114.8),
+            vec2(80.6, 124.8)
+        ],
+        "start": vec2(49,126),
+        "angle": 5*Math.PI/4,
+        "finish": [vec2(81,27.5), vec2(66, 14)],
+        "title": "brain"
+    },
 ]
-let level = 0;
+let level = 4;
 
 levelSelect.setAttribute("max", levels.length)
 
@@ -280,6 +370,11 @@ function gameUpdate() {
 }
 function gameDraw() {
     let currentLevel = levels[level];
+    // Tutorial
+    ctx.save()
+    ctx.filter = "blur(3px)";
+    ctx.drawImage(tutorial,height-15,0)
+    ctx.restore()
     ctx.lineWidth = 0.6
     // level polygon
     ctx.save()
@@ -338,11 +433,6 @@ function gameDraw() {
 
     // Level name
     drawPixelText(`level ${level+1}/${levels.length}: ${currentLevel.title}`, 2,2,false,"white")
-    // Tutorial
-    ctx.save()
-    ctx.filter = "blur(3px)";
-    ctx.drawImage(tutorial,height-15,0)
-    ctx.restore()
 }
 let lastTime = performance.now();
 function gameLoop() {
