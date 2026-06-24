@@ -95,6 +95,32 @@ var levels = [
     },
     {
         "level": [
+            vec2(74.2, 82.3),
+            vec2(52.5, 66.8),
+            vec2(82.6, 40.6),
+            vec2(109.4, 52.9),
+            vec2(82.7, 2.2),
+            vec2(54.8, 46.7),
+            vec2(9.2, 64.2),
+            vec2(52, 85.8),
+            vec2(18.3, 136.2),
+            vec2(77, 122),
+            vec2(143.6, 136),
+            vec2(115.6, 85.2),
+            vec2(156.3, 66.2),
+            vec2(112, 58.2),
+            vec2(94.6, 83.9),
+            vec2(103, 108.4),
+            vec2(77.4, 94),
+            vec2(55.1, 111.6)
+        ],
+        "start": vec2(130,69),
+        "angle": 4.5*Math.PI/5,
+        "finish": [vec2(98,48), vec2(104, 42)],
+        "title": "star"
+    },
+    {
+        "level": [
             vec2(70,100),
             vec2(70,133),
             vec2(47,131),
@@ -143,8 +169,9 @@ var levels = [
         "finish": [vec2(86,100), vec2(86, 131.5)],
         "title": "donut"
     },
+
 ]
-let level = 0;
+let level = 2;
 
 levelSelect.setAttribute("max", levels.length)
 
